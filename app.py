@@ -1,16 +1,16 @@
 
 from socket import timeout
 from sys import flags
-from flask import Flask,  make_response
+from flask import Flask
 from markupsafe import escape
 from flask import render_template
 from flask import request
+from flask import make_response
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@localhost:3306/minhacon'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:1361002Hugo@localhost:3306/minhacon'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 
 db = SQLAlchemy(app)
 
@@ -80,6 +80,5 @@ def login():
     return render_template('login.html')
 
 
-if __name__=='__app__':
+if __name__=='__main__':
     db.create_all()
-print()
