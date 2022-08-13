@@ -9,7 +9,7 @@ from flask import make_response
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:1361002Hugo@localhost:3306/minhacon'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@localhost:3306/meubanco'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -80,5 +80,5 @@ def login():
     return render_template('login.html')
 
 
-if __name__=='__main__':
+if __name__=='__app__':
     db.create_all()
