@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UBB- Comprar e Vender - {{titulo}}</title>
+    <title>UBB- Comprar e Vender - Cadastro de {{titulo}}</title>
 </head>
 <body>
-    <h1>{{titulo}}</h1>
+    <h1> Cadastro de {{titulo}}</h1>
     <form action="caduser" method="post">
         <p><label for="user">Username</label></p>
         <p><input type="text" id="user" name="user"></p>
@@ -18,10 +18,36 @@
         <p><label for="password">Password</label></p>
         <p><input type="text" id="password" name="password"></p>
 
+        <p><label for="end">Endereco</label></p>
+        <p><input type="text" id="end" name="end"></p>
+
+    
         <p><input type="submit" value="Cadastrar"></p>
 
 
     </form>
   
+
+    <h1> Lista de {{titulo}}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Senha</th>
+                <th>Endereço</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{usuario.nome}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.senha}}</td>
+                    <td>{{usuario.end}}</td>
+                </tr>
+           {%endfor%} 
+        </tbody>
+    </table>
 </body>
 </html>

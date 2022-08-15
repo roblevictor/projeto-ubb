@@ -7,10 +7,13 @@ from flask import render_template
 from flask import request
 from flask import make_response
 from flask_sqlalchemy import SQLAlchemy
+from flask import url_for
+from flask import redirect
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@localhost:3306/meubanco'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 
 db = SQLAlchemy(app)
 
@@ -21,29 +24,30 @@ class Usuario(db.Model):
     senha = db.Column('usu_senha', db.String(256))
     end = db.Column('usu_end', db.String(256))
 
-def __init__(self, nome, email, senha, end):
-    self.nome = nome
-    self.email = email
-    self.senha = senha
-    self.end = end
+    def __init__(self, nome, email, senha, end):
+        self.nome = nome
+        self.email = email
+        self.senha = senha
+        self.end = end
     
 @app.route("/")
 def index():
     return render_template('index.html')
 
-
 @app.route("/sobre/perfil")
 def perfil():
     return "<h5>meu perfil</h5>"
 
-
 @app.route("/cad/usuario")
-def usuario():
-    return render_template('usuario.html', titulo="Cadastro de usuario")
+def cadusuario():
+  return render_template('usuario.html',usuarios = Usuario.query.all(), titulo="Usuario")
 
+@app.route("/cad/caduser", methods=['POST'])
 def caduser():
-    return request.form
-
+    usuario = Usuario(request.form.get('user'), request.form.get('email'), request.form.get('password'), request.form.get('end'))
+    db.session.add(usuario)
+    db.session.commit()
+    return redirect(url_for('cadusuario'))
 
 @app.route("/cad/anuncio")
 def anuncio():
@@ -80,5 +84,6 @@ def login():
     return render_template('login.html')
 
 
-if __name__=='__app__':
+if __name__=='app':
+    print('app')
     db.create_all()
