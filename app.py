@@ -42,14 +42,14 @@ def perfil():
 def cadusuario():
   return render_template('usuario.html',usuarios = Usuario.query.all(), titulo="Usuario")
 
-@app.route("/cad/caduser", methods=['POST'])
-def caduser():
+@app.route("/usuario/novo", methods=['POST'])
+def novousuario():
     usuario = Usuario(request.form.get('user'), request.form.get('email'), request.form.get('password'), request.form.get('end'))
     db.session.add(usuario)
     db.session.commit()
     return redirect(url_for('cadusuario'))
 
-@app.route("/cad/anuncio")
+@app.route("/anuncio/novo")
 def anuncio():
     return render_template('anuncio.html')
 
