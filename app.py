@@ -108,16 +108,39 @@ def deletarusuario(id):
     db.session.commit()
     return redirect(url_for('cadusuario'))
 
-@app.route("/cad/anuncio")
+app.route("/cad/anuncio")
 def anuncio():
-    return render_template('anuncio.html', Anuncios = Anuncio.query.all(), categorias = Categoria.query.all(), titulo="Anuncio")
+    return render_template('anuncio.html', anuncios = Anuncio.query.all(), categorias = Categoria.query.all(), titulo="Anuncio")
 
-@app.route("/anuncio/criar", methods=['POST'])
-def criaranuncio():
+@app.route("/anuncio/novo", methods=['POST'])
+def novoanuncio():
     anuncio = Anuncio(request.form.get('nome'), request.form.get('desc'),request.form.get('qtd'),request.form.get('preco'),request.form.get('cat'),request.form.get('uso'))
     db.session.add(anuncio)
     db.session.commit()
     return redirect(url_for('anuncio'))
+
+@app.route("/anuncio/editar/<int:id>", methods=['GET','POST'])
+def editaranuncio(id):
+    anuncio = Anuncio.query.get(id)
+    if request.method == 'POST':
+        anuncio.nome = request.form.get('nome')
+        anuncio.desc = request.form.get('desc')
+        anuncio.qtd = request.form.get('qtd')
+        anuncio.preco = request.form.get('preco')
+        anuncio.cat_id = request.form.get('cat_id')
+        anuncio.usu_id = request.form.get('usu_id')
+        db.session.add(anuncio)
+        db.session.commit()
+        return redirect(url_for('anuncio'))
+
+    return render_template('editanuncio.html', anuncio = anuncio, titulo="Anuncio")
+
+@app.route("/anuncio/deletar/<int:id>")
+def deletaranuncio(id):
+    anuncio = Anuncio.query.get(id)
+    db.session.delete(anuncio)
+    db.session.commit()
+    return redirect(url_for('anuncio'))    
 
 @app.route("/anuncios/pergunta")
 def pergunta():
@@ -133,17 +156,35 @@ def favoritos():
     print("favorito inserido")
     return f"<h4>Comprado</h4>"
 
-@app.route("/config/categoria")
+app.route("/config/categoria")
 def categoria():
     return render_template('categoria.html', categorias = Categoria.query.all(), titulo='Categoria')
 
-@app.route("/categoria/criar", methods=['POST'])
-def criarcategoria():
+@app.route("/categoria/novo", methods=['POST'])
+def novacategoria():
     categoria = Categoria(request.form.get('nome'), request.form.get('desc'))
     db.session.add(categoria)
     db.session.commit()
     return redirect(url_for('categoria'))
 
+@app.route("/categoria/editar/<int:id>", methods=['GET','POST'])
+def editarcategoria(id):
+    categoria = Categoria.query.get(id)
+    if request.method == 'POST':
+        categoria.nome = request.form.get('nome')
+        categoria.descricao = request.form.get('desc')
+        db.session.add(categoria)
+        db.session.commit()
+        return redirect(url_for('categoria'))
+
+    return render_template('editcategoria.html', categoria = categoria, titulo="Categoria")
+
+@app.route("/categoria/deletar/<int:id>")
+def deletarcategoria(id):
+    categoria = Categoria.query.get(id)
+    db.session.delete(categoria)
+    db.session.commit()
+    return redirect(url_for('categoria'))   
 
 @app.route("/relatorio/vendas")
 def relVendas():
