@@ -109,15 +109,15 @@ def deletarusuario(id):
     return redirect(url_for('cadusuario'))
 
 @app.route("/cad/anuncio")
-def cadanuncio():
+def anuncio():
     return render_template('anuncio.html', anuncios = Anuncio.query.all(), categorias = Categoria.query.all(), titulo="Anuncio")
 
-@app.route("/anuncio/novo", methods=["POST"])
-def novoanuncio():
+@app.route("/anuncio/criar", methods=["POST"])
+def criaranuncio():
     anuncio = Anuncio(request.form.get('nome'), request.form.get("desc"), request.form.get("qtd"), request.form.get("preco"), request.form.get("cat"), request.form.get("uso"))
     db.session.add(anuncio)
     db.session.commit()
-    return redirect(url_for('cadanuncio'))
+    return redirect(url_for('anuncio'))
 
 
 @app.route("/anuncio/editar/<int:id>", methods=['GET','POST'])
@@ -160,8 +160,8 @@ app.route("/config/categoria")
 def categoria():
     return render_template('categoria.html', categorias = Categoria.query.all(), titulo='Categoria')
 
-@app.route("/categoria/novo", methods=['POST'])
-def novacategoria():
+@app.route("/categoria/criar", methods=['POST'])
+def criarcategoria():
     categoria = Categoria(request.form.get('nome'), request.form.get('desc'))
     db.session.add(categoria)
     db.session.commit()
