@@ -1,4 +1,3 @@
-
 from socket import timeout
 from sys import flags
 from flask import Flask
@@ -114,7 +113,7 @@ def anuncio():
 
 @app.route("/anuncio/criar", methods=["POST"])
 def criaranuncio():
-    anuncio = Anuncio(request.form.get('nome'), request.form.get("desc"), request.form.get("qtd"), request.form.get("preco"), request.form.get("cat"), request.form.get("uso"))
+    anuncio = Anuncio(request.form.get('nome'), request.form.get("desc"), request.form.get("qtd"), request.form.get("preco"), request.form.get("cat"), request.form.get("usu"))
     db.session.add(anuncio)
     db.session.commit()
     return redirect(url_for('anuncio'))
@@ -156,7 +155,7 @@ def favoritos():
     print("favorito inserido")
     return f"<h4>Comprado</h4>"
 
-app.route("/config/categoria")
+@app.route("/config/categoria")
 def categoria():
     return render_template('categoria.html', categorias = Categoria.query.all(), titulo='Categoria')
 
