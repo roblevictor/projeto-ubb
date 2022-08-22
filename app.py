@@ -9,9 +9,7 @@ from flask import make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask import url_for
 from flask import redirect
-from flask_login import (current_user, LoginManager,
-                             login_user, logout_user,
-                             login_required)
+from flask_login import (current_user, LoginManager, login_user, logout_user, login_required)
 import hashlib
 
 app = Flask(__name__)
@@ -89,17 +87,18 @@ def load_user(id):
 
 
 @app.route("/")
-@login_required
+
 def index():
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
+
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
-        senha = hashlib.sha512(str(request.form.get('password')).encode("utf-8")).hexdigest()
+        password = hashlib.sha512(str(request.form.get('password')).encode("utf-8")).hexdigest()
 
-        user = Usuario.query.filter_by(email=email, senha=senha). first()
+        user = Usuario.query.filter_by(email=email, senha=password).first()
         if user:
             login_user(user)
             return redirect(url_for('index'))
@@ -113,6 +112,7 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route("/sobre/perfil")
+@login_required
 def perfil():
     return "<h5>meu perfil</h5>"
 
@@ -123,7 +123,7 @@ def cadusuario():
 
 @app.route("/usuario/criar", methods=['POST'])
 def criarusuario():
-    hash = hashlib.sha512(str(request.form.get('passwd')).encode("utf-8")).hexdigest()
+    hash = hashlib.sha512(str(request.form.get('password')).encode("utf-8")).hexdigest()
     usuario = Usuario(request.form.get('user'), request.form.get('email'),hash,request.form.get('end'))
     db.session.add(usuario)
     db.session.commit()
@@ -156,6 +156,7 @@ def deletarusuario(id):
     return redirect(url_for('cadusuario'))
 
 @app.route("/cad/anuncio")
+@login_required
 def anuncio():
     return render_template('anuncio.html', anuncios = Anuncio.query.all(), categorias = Categoria.query.all(), titulo="Anuncio")
 
@@ -204,6 +205,7 @@ def favoritos():
     return f"<h4>Comprado</h4>"
 
 @app.route("/config/categoria")
+@login_required
 def categoria():
     return render_template('categoria.html', categorias = Categoria.query.all(), titulo='Categoria')
 
@@ -233,10 +235,12 @@ def deletarcategoria(id):
     return redirect(url_for('categoria'))   
 
 @app.route("/relatorio/vendas")
+@login_required
 def relVendas():
     return render_template('relVendas.html')
 
 @app.route("/relatorios/compras")
+@login_required
 def relCompras():
     return render_template('relCompras.html')
 

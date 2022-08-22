@@ -1,14 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
     <title>Relatório de Vendas</title>
 </head>
 <body>
-    <h5>
-        Meu relatório de vendas!
-    </h5>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:rgb(10, 12, 12);">
+            <a class="navbar-brand" href={{url_for("index")}}>Util Bonito e Barato</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                <a class="nav-link" href={{url_for("index")}}>Página Inicial</a>
+                </li>
+            </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        <h1>Relatório de Vendas</h1>
+        <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Preco</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Anúncio</th>
+                  <th scope="col">Vendedor</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for compra in compras %}
+                <tr>
+                    <td>{{compra.id}}</td>
+                    <td>R${{compra.preco}}</td>
+                    <td>{{compra.qtd}} Un</td>
+                    <td>R${{compra.total}}</td>
+                    <td>
+                        {% for anuncio in anuncios %}
+                            {% if compra.idanuncio == anuncio.id %}
+                                {{compra.idanuncio}} - {{anuncio.nome}}
+                            {% endif %}
+                        {% endfor %}
+                    </td> 
+                    <td>
+                        {% for anuncio in anuncios %}
+                            {% if compra.idanuncio == anuncio.id %}
+                                {% for usuario in usuarios %}
+                                    {% if anuncio.idusuario == usuario.id %}
+                                        {{usuario.id}} - {{usuario.nome}}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>       
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </main>
 </body>
 </html>

@@ -1,27 +1,51 @@
-<!doctype html>
-<html>
-<head> 
-    <title>BBB - Comprar e vender - Edicao de {{titulo}}</title>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
 </head>
 
 <body>
-    <h4>Edicao de {{titulo}}</h4>
+   
+<main>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>Edicao de {{titulo}}</h1>
+        </div>
     <form action="/usuario/editar/{{ usuario.id }}" method="post">
-        <p><label for="user">Username</label>
-        <input type="text" id="user" name="user" value="{{usuario.nome}}"></p>
+        <div class="form-group">
+            <label for="user">Username</label>
+            <input type="text" class="form-control" id="user" name="user" value="{{usuario.nome}}">
+        </div>
 
-        <p><label for="email">E-mail</label>
-        <input type="text" id="email" name="email" value="{{usuario.email}}"></p>       
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="text" class="form-control" id="email" name="email" value="{{usuario.email}}">       
+        </div>
 
-        <p><label for="passwd">Password</label>
-        <input type="text" id="passwd" name="passwd" value="{{usuario.senha}}"></p>
+        <div class="form-group">
+            <label for="passwd">Password</label>
+            <input type="text" class="form-control" id="password" name="passwd" value="{{usuario.senha}}">
+       </div>
 
-        <p><label for="end">Endereco</label>
-        <input type="text" id="end" name="end" value="{{usuario.end}}"></p>
+       <div class="form-group">
+            <label for="end">Endereco</label>
+            <input type="text" id="end" name="end" value="{{usuario.end}}">
+        </div>
         
-        <p><input type="submit" value="Alterar"></p>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary">Alterar</button>
+            <input class="btn btn-primary" class="form-control" type="reset" value="Reset">
+        </div>
     </form>
-    <a href={{url_for("cadusuario")}}> Cancelar</a>
+         <div class="form-group">
+            <a href={{url_for("cadusuario")}}> Cancelar</a>
+         </div>
+</div>
+</main>
 </body>
 
 </html>

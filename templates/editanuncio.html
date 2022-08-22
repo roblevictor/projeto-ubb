@@ -1,38 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>editCategoria</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
 </head>
 <body>
-    <h4>Edicao de {{titulo}}</h4>
-    <form action="/anuncio/editar/{{ anuncio.id }}" method="post">
-        <p><label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" value="{{anuncio.nome}}"></p>
+  
+   
+<main>
+    <div class="container ">
+        <div class="page-header">
+            <h1>Edicao de {{titulo}}</h1>
+        </div>
 
-        <p><label for="desc">Descrição</label>
-        <input type="text" id="desc" name="desc" value="{{anuncio.desc}}"></p>       
-        
-        <p><label for="qtd">Quantidade</label>
-        <input type="text" id="qtd" name="qtd" value="{{anuncio.qtd}}"></p>       
+
+        <form action="/anuncio/editar/{{ anuncio.id }}" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text"  class="form-control" id="nome" name="nome" value="{{anuncio.nome}}">
+            </div>
+
+            <div class="form-group">
+                <label for="desc">Descrição:</label>
+                <input type="text"  class="form-control" id="desc" name="desc" value="{{anuncio.desc}}">       
+            </div>
+
+            <div class="form-group">
+                <label for="qtd">Quantidade:</label>
+                <input type="text"  class="form-control" id="qtd" name="qtd" value="{{anuncio.qtd}}">       
+             </div>  
+             
+             <div class="form-group">
+                <label for="preco">Preco:</label>
+                <input type="text"  class="form-control" id="preco" name="preco" value="{{anuncio.preco}}"> 
+            </div>
+
+               <label for="cat">Categoria</label>
+                <select id="cat" name="cat">
+                    {% for categoria in categorias %} 
+                        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
+
+            <div class="form-group">
+                <label for="usu">Usuario</label>
+                <input type="text" id="uso" name="uso">
+            </div>
             
-        <p><label for="preco">Preco</label>
-        <input type="text" id="preco" name="preco" value="{{anuncio.preco}}"></p> 
-        
-        <p><label for="cat">Categoria</label>
-            <select id="cat" name="cat">
-                {% for categoria in categorias %} 
-                    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
-                {% endfor %}
-            </select></p>
-        
-        <p><label for="usu">Usuario</label>
-        <input type="text" id="uso" name="uso"></p>
-        
-        <p><input type="submit" value="Alterar"></p>
-    </form>
-    <a href={{url_for("anuncio")}}> Cancelar</a>
+        <input type="submit" value="Alterar">
+        </form>
+        <a href={{url_for("anuncio") }}> Cancelar</a>
+    </div>
+</main>
 </body>
 </html>

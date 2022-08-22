@@ -1,0 +1,28 @@
+h1{
+    margin: 10px;
+}
+.img-container{
+    display: flex;
+    flex: 1;
+    height: 500px;
+    width: 500px;
+    margin: 70px;
+    margin-top: 70px;
+}
+
+.menu-container{
+    display: flex;
+    flex: 1;
+    position: fixed;
+    top: 180px;
+    left: 550px;
+    height: 500px;
+    width: 500px;
+    flex-direction: column;
+    margin: 10px;
+    padding: 8px;
+    margin-left: 300px;
+    font-size: 18px;
+    box-sizing: border-box 1px;
+    z-index: index; ;
+}
