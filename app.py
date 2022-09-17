@@ -112,12 +112,12 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route("/sobre/perfil")
-@login_required
+#@login_required
 def perfil():
     return "<h5>meu perfil</h5>"
 
 @app.route("/cad/usuario")
-@login_required
+#@login_required
 def cadusuario():
   return render_template('usuario.html',usuarios = Usuario.query.all(), titulo="Usuario")
 
