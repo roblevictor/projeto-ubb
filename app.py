@@ -14,7 +14,7 @@ import hashlib
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@localhost:3306/meubanco'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@victorroble.mysql.pythonanywhere-services.com:3306/victorroble$meubanco'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://victorroble:136102Hugo@victorroble.mysql.pythonanywhere-services.com:3306/victorroble$meubanco'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 
@@ -26,6 +26,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 class Usuario(db.Model):
+    __tablename__ = "usuario"
     id = db.Column('usu_id', db.Integer, primary_key=True)
     nome = db.Column('usu_nome', db.String(256))
     email = db.Column('usu_email', db.String(256))
@@ -59,6 +60,36 @@ class Categoria(db.Model):
     def __init__ (self, nome, desc):
         self.nome = nome
         self.desc = desc
+
+class Compra(db.Model):
+    __tablename__ = "compra"
+    id = db.Column('id_compra', db.Integer, primary_key=True)
+    preco = db.Column("compra_preco", db.Float)
+    qtd = db.Column("compra_qtd", db.Integer)
+    total = db.Column("compra_total", db.Float)
+    anuncio_id = db.Column("anunc_idanuncio", db.Integer, db.ForeignKey("anuncio.anu_id"))
+    usu_id = db.Column("user_idusuario", db.Integer, db.ForeignKey("usuario.usu_id"))
+    
+    def __init__(self, preco, qtd, total, anu_id, usu_id):
+        self.preco = preco
+        self.qtd = qtd
+        self.total = total
+        self.anu_id = anu_id
+        self.usu_id = usu_id
+
+class Pergunta(db.Model):
+    __tablename__ = "pergunta"
+    id = db.Column("idPergunta", db.Integer, primary_key=True)
+    pergunta = db.Column("per_pergunta", db.String(256))
+    resposta = db.Column("per_resposta", db.String(256))
+    usu_id = db.Column("usu_id", db.Integer, db.ForeignKey("usuario.usu_id"))
+    anu_id = db.Column("anuncio_id", db.Integer, db.ForeignKey("anuncio.anu_id"))
+    
+    def __init__(self, pergunta, resposta, usu_id, anu_id):
+        self.pergunta = pergunta
+        self.resposta = resposta
+        self.usu_id = usu_id
+        self.anu_id = anu_id
     
 
 class Anuncio(db.Model):
@@ -88,13 +119,10 @@ def load_user(id):
     return Usuario.query.get(id)
 
 
-@app.route("/")
-
 def index():
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
-
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -106,12 +134,18 @@ def login():
             return redirect(url_for('index'))
         else:
             return redirect(url_for('login'))
+
     return render_template('login.html')
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route("/")
+def index():
+    return render_template('index.html')
 
 @app.route("/sobre/perfil")
 #@login_required
@@ -158,7 +192,7 @@ def deletarusuario(id):
     return redirect(url_for('cadusuario'))
 
 @app.route("/cad/anuncio")
-@login_required
+#@login_required
 def anuncio():
     return render_template('anuncio.html', anuncios = Anuncio.query.all(), categorias = Categoria.query.all(), titulo="Anuncio")
 
@@ -194,20 +228,47 @@ def deletaranuncio(id):
 
 @app.route("/anuncios/pergunta")
 def pergunta():
-    return render_template('pergunta.html')
+    return render_template('anuncioPergunta.html', perguntas = Pergunta.query.all())
 
-@app.route("/anuncios/compra")
-def compra():
-    print("anuncio comprado")
-    return ""
+@app.route("/anunc/fazerpergunta/<int:id>")
+def fazerpergunta(id):
+    anuncio = Anuncio.query.get(id)
+    return render_template("fazerpergunta.html", anuncio = anuncio, perguntas = Pergunta.query.filter_by(anuncio_id = anuncio.id))
 
-@app.route("/anuncio/favoritos")
-def favoritos():
-    print("favorito inserido")
-    return f"<h4>Comprado</h4>"
+@app.route("/anunc/fazerpergunta/<int:anuncio>/<int:id>", methods=['POST'])
+def fazerresposta(anuncio, id):
+    pergunta = Pergunta.query.get(id)
+    pergunta.resposta = request.form.get("resposta")
+    db.session.add(pergunta)
+    db.session.commit()
+    return redirect(url_for("fazerpergunta", id = anuncio))
+
+@app.route("/anunc/pergunta/criar/<int:id>", methods=['POST'])
+def criarpergunta(id):
+    anuncio = Anuncio.query.get(id)
+    pergunta = Pergunta(request.form.get("pergunta"),
+    None, 
+    current_user.id,
+    anuncio.id)
+    db.session.add(pergunta)
+    db.session.commit()
+    return redirect(url_for("fazerpergunta", id = id))
+
+@app.route("/anunc/pergunta/resposta/<int:id>", methods=['GET','POST'])
+def editarperguntar(id):
+    pergunta = Pergunta.query.get(id) 
+    if request.method == "POST":
+        pergunta.pergunta = pergunta.pergunta
+        pergunta.resposta = request.form.get("resposta")
+        pergunta.usu_id = pergunta.usu_id
+        pergunta.anuncio_id = pergunta.anuncio_id
+        db.session.add(pergunta)
+        db.session.commit()
+        return redirect(url_for("pergunta"))
+    return render_template("responderpergunta.html", pergunta = pergunta)
 
 @app.route("/config/categoria")
-@login_required
+#@login_required
 def categoria():
     return render_template('categoria.html', categorias = Categoria.query.all(), titulo='Categoria')
 
@@ -234,21 +295,50 @@ def deletarcategoria(id):
     categoria = Categoria.query.get(id)
     db.session.delete(categoria)
     db.session.commit()
-    return redirect(url_for('categoria'))   
+    return redirect(url_for('categoria')) 
+
+@app.route("/anuncio/compra/")
+def compra():
+    return redirect(url_for('index'))
+
+@app.route("/anuncio/compra/<int:id>")
+@login_required
+def comprar(id):
+    anuncio = Anuncio.query.get(id)
+    aux = anuncio.qtd
+    return render_template("comprar.html", aux = aux, anuncio = anuncio, usuarios = Usuario.query.all())
+
+@app.route("/anuncio/compra/confirmarcompra/<int:id>", methods=['GET','POST'])
+def confirmarcompra(id):
+    anuncio = Anuncio.query.get(id)
+    if int(request.form.get("qtd")) > anuncio.qtd:
+        return render_template("errocompra.html")
+    else:
+        compra = Compra(anuncio.preco, request.form.get("qtd"), anuncio.preco * float(request.form.get("qtd")), anuncio.id, request.form.get("user"))
+        anuncio.nome = anuncio.nome
+        anuncio.desc = anuncio.desc
+        anuncio.qtd = anuncio.qtd - int(request.form.get("qtd"))
+        anuncio.preco = anuncio.preco
+        anuncio.usu_id = anuncio.usu_id
+        anuncio.cat_id = anuncio.cat_id
+        db.session.add(compra)
+        db.session.commit()
+        db.session.add(anuncio)
+        db.session.commit()
+        return redirect(url_for("relCompras"))  
+
 
 @app.route("/relatorio/vendas")
-@login_required
+#@login_required
 def relVendas():
     return render_template('relVendas.html')
 
 @app.route("/relatorios/compras")
-@login_required
+#@login_required
 def relCompras():
     return render_template('relCompras.html')
-
-
 
 if __name__=='app':
     print('app')
     db.create_all()
-    #app.run
+    #app.run()

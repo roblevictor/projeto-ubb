@@ -17,52 +17,62 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <head>
+
             <input type="checkbox" id="check">
-            <label for="check">
-                <i class="fas fa-bars" id="btn"></i>
-                <i class="fa fa-times" id="cancel"></i>
-            </label>
-            <div class="sidebar">
-                <header>Menu</header>
-                <a href={{ url_for("cadusuario") }} class="active">
-                    <i class="fas fa-qrcode"></i>
-                    <span>Cadastro Usuario</span>
-                </a>
-                <a href={{ url_for("anuncio") }}>
-                    <i class="fa fa-bullhorn"></i>
-                    <span class="span-menu">Cad Anuncio</span>
-                </a>
-                <a href={{ url_for("categoria") }}> 
-                    <i class="fa fa-gear"></i>
-                    <span class="span-menu">Conf categoria</span>
-                </a>
-                <a href={{ url_for("relCompras") }}> 
-                    <i class="fa fa-industry"></i>
-                    <span class="span-menu">RelCompra</span>
-                </a>
-                <a href={{ url_for("relVendas") }}> 
-                    <i class="fa fa-bar-chart"></i>
-                    <span class="span-menu">Rel Vendas</span>
-                </a>
-                <a href={{ url_for("logout") }}> 
-                    <i class="fa fa-mail-forward"></i>
-                    <span class="span-menu">Logout</span>
-                </a>
-            </div>
+                <label for="check">
+                    <i class="fas fa-bars" id="btn"></i>
+                    <i class="fa fa-times" id="cancel"></i>
+                </label>
+    
+                <div class="sidebar">
+                    <header>Menu</header>
+                    <a href={{ url_for("cadusuario") }} class="active">
+                        <i class="fas fa-qrcode"></i>
+                        <span>Cadastro Usuario</span>
+                    </a>
+                    <a href={{ url_for("anuncio") }}>
+                        <i class="fa fa-bullhorn"></i>
+                        <span class="span-menu">Cad Anuncio</span>
+                    </a>
+                    <a href={{ url_for("categoria") }}> 
+                        <i class="fa fa-gear"></i>
+                        <span class="span-menu">Conf categoria</span>
+                    </a>
+                    <a href={{ url_for("relCompras") }}> 
+                        <i class="fa fa-industry"></i>
+                        <span class="span-menu">RelCompra</span>
+                    </a>
+                    <a href={{ url_for("relVendas") }}> 
+                        <i class="fa fa-bar-chart"></i>
+                        <span class="span-menu">Rel Vendas</span>
+                    </a>
+    
+                    <a href={{ url_for("compra") }}> 
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="span-menu">Compras</span>
+                    </a>
+    
+                    <a href={{ url_for("logout") }}> 
+                        <i class="fa fa-mail-forward"></i>
+                        <span class="span-menu">Logout</span>
+                    </a>
+                </div>
         
         </head>
     </head>
 
 <main>
     
-    <h1>Bem vindo ao Útil, Bonito e Barato</h1>
+    <h1>Bem vindo ao Útil, Bonito e Barato!</h1>
 
     <div class="img-container">
-        <img src="../static/img/carrinho.jfif" alt="logo imagem de compras, representnado ecommerce" class="img-thumbnail">
+        <img src="../static/img/eccommerce.png.png" alt="logo imagem de compras, representnado ecommerce" class="img-thumbnail">
     </div>
     
  
 </main>
 </body>
-
+<footer>
+    <a href="https://br.freepik.com/vetores-gratis/ilustracao-do-conceito-de-campanha-de-comercio-eletronico_21726749.htm#query=ilustracoes%20ecommerce&position=1&from_view=search"></a> 
+</footer>
 </html>
