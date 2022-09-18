@@ -1,28 +1,184 @@
-h1{
-    margin: 10px;
-}
-.img-container{
-    display: flex;
-    flex: 1;
-    height: 500px;
-    width: 500px;
-    margin: 70px;
-    margin-top: 70px;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
 }
 
-.menu-container{
-    display: flex;
-    flex: 1;
+.sidebar{
     position: fixed;
-    top: 180px;
-    left: 550px;
-    height: 500px;
-    width: 500px;
+    width: 240px;
+    left: -240px;
+    height: 100%;
+    background-color: black;
+    transition: all .5s ease;
+}
+h1{
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar header{
+    font-size: 28px;
+    color: aliceblue;
+    line-height: 70px;
+    text-align: center;
+    background-color: #1b1b1b;
+    user-select: none;
+    font-family: 'Montserrat';
+
+}
+
+.sidebar a{
+    display: block;
+    height: 65px;
+    width: 100%;
+    color: white;
+    line-height: 65px;
+    padding-left: 30px;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+    border-top: 1px solid rgba(255,255,255,.1);
+    font-family:'Courier New', Courier, monospace;
+    transition: all .5s ease;
+}
+
+a.active,a:hover{
+    border-left: 5px solid #593632;
+    color: #b93632;
+}
+
+.sidebar a i{
+    font-size: 23px;
+    margin-right: 16px;
+}
+.siderbar a span{
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+#check{
+    display: none;
+}
+
+label #btn,label #cancel{
+    position: absolute;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #262626;
+    margin: 15px 30px;
+    font-size: 28px;
+    background:#262626;
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    line-height: 45px;
+    transition: all .5s ease;
+}
+
+label #cancel{
+    opacity: 0;
+    visibility: hidden;
+}
+
+#check:checked ~ .sidebar{
+    left: 0;
+}
+
+#check:checked ~ label #btn{
+    margin-left: 245px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+@media(max-width: 860px){.sidebar{
+    height: auto;
+    width: 78px;
+    left: 0;
+    margin: 100px 0;
+
+}
+
+header,#btn, #cancel{
+    display: none;
+}
+
+span{
+    position: absolute;
+    margin-left: 23px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar a{
+    height: 60px;
+}
+.sidebar a i{
+    margin-left: -10px;
+}
+
+a:hover{
+    width: 200px;
+    background: inherit;
+}
+
+.sidebar a:hover span{
+    opacity: 1;
+    visibility: visible;
+}
+}
+
+.img-container{
+    width: 800px;
+    margin: 0px auto;
+}
+
+
+.login-container{
+    overflow: hidden;
+    display: block;
+    width: 100%;
+}
+.form-login{
+    display: inline;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+.img-pic{
+    padding: 0 6rem;
+}
+
+.page-header{
+    display: flex;
     flex-direction: column;
-    margin: 10px;
-    padding: 8px;
-    margin-left: 300px;
-    font-size: 18px;
-    box-sizing: border-box 1px;
-    z-index: index; ;
+    color: black;
+    margin-top: 4rem;
+    padding: 0;
+}
+
+.title-cont{
+    margin: 5px;
+}
+
+.title-bemvindo{
+    
+    color: black;
+    font-size: 28px;
+    font-weight: 600;
+
+    display: grid;
+    place-items: center;
+}
+
+.form-group{
+    margin: 5px 30px;
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: 2px solid #4040FF;
+}
+
+.input-container{
+    margin-top: 1rem;
 }

@@ -14,6 +14,8 @@ import hashlib
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@localhost:3306/meubanco'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@victorroble.mysql.pythonanywhere-services.com:3306/victorroble$meubanco'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 
 db = SQLAlchemy(app)
@@ -249,3 +251,4 @@ def relCompras():
 if __name__=='app':
     print('app')
     db.create_all()
+    #app.run

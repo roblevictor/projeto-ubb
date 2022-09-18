@@ -8,41 +8,104 @@
     <link rel="stylesheet" href="../static/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:rgb(10, 12, 12);">
-        <a class="navbar-brand" href={{url_for("index") }}>Util Bonito e Barato</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
-        <ul class="navbar-nav mx-auto">
-            <li class="nav-item">
-            <a class="nav-link" href={{url_for("index") }}>Página Inicial</a>
-            </li>
-        </ul>
-        </div>
-    </nav>
-</header>
+
 <body>
- <div class="mx-auto" style="width: 200px;">
-        <div class="page-header">
-            <h1> LOGIN</h1>
+
+
+<head>
+    <title> Menu</title>
+    <link rel="stylesheet" href="../static/css/style.css" content="width-device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <head>
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fas fa-bars" id="btn"></i>
+            <i class="fa fa-times" id="cancel"></i>
+        </label>
+        <div class="sidebar">
+            <header>Menu</header>
+            <a href={{ url_for("cadusuario") }} class="active">
+                <i class="fas fa-qrcode"></i>
+                <span>Cadastro Usuario</span>
+            </a>
+            <a href={{ url_for("anuncio") }}>
+                <i class="fa fa-bullhorn"></i>
+                <span class="span-menu">Cad Anuncio</span>
+            </a>
+            <a href={{ url_for("categoria") }}> 
+                <i class="fa fa-gear"></i>
+                <span class="span-menu">Conf categoria</span>
+            </a>
+            <a href={{ url_for("relCompras") }}> 
+                <i class="fa fa-industry"></i>
+                <span class="span-menu">RelCompra</span>
+            </a>
+            <a href={{ url_for("relVendas") }}> 
+                <i class="fa fa-bar-chart"></i>
+                <span class="span-menu">Rel Vendas</span>
+            </a>
+            <a href={{ url_for("logout") }}> 
+                <i class="fa fa-mail-forward"></i>
+                <span class="span-menu">Logout</span>
+            </a>
         </div>
+    
+    </head>
+</head>
+<main>
+
+
+    <div class="login-container">
+         
+        <div class="title-cont">
+            <span class="title-bemvindo">Bem Vindo!</span>
+        </div>
+
+                
+                  
         <form action="/login" method="post">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" id="email" name="email">
-            </div>
 
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="password">       
-            </div>
+            <div class="page-header">
+                             
+                <h1> LOGIN</h1>
+                
+                <div class="input-countainer">   
 
-            <div class="form-group">
-                <button type="button" class="btn btn-secondary">Logar</button>
+                    <div class="img-pic">
+                        <img src="../static/img/compras-img.png">
+                    </div>
+                    
+                
+                    <div class="input-countainer">  
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email">
+                        </div>
+                    </div> 
+                    <div class="input-countainer">   
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" id="password" name="password">       
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary">Logar</button>
+                    </div>
+                </div> 
+
             </div>
-        </form>
- </div>
+         
+        </form> 
+
+    
+    </div>
+    
+    
+   
+
+</main>
+</body>
+
 </html>
