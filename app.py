@@ -13,8 +13,8 @@ from flask_login import (current_user, LoginManager, login_user, logout_user, lo
 import hashlib
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@localhost:3306/meubanco'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://victorroble:136102Hugo@victorroble.mysql.pythonanywhere-services.com:3306/victorroble$meubanco'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:136102Hugo@localhost:3306/meubanco'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://victorroble:136102Hugo@victorroble.mysql.pythonanywhere-services.com:3306/victorroble$meubanco'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 
@@ -118,8 +118,9 @@ def paginanotfound(error):
 def load_user(id):
     return Usuario.query.get(id)
 
-
+@app.route("/")
 def index():
+    db.create_all()
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -338,7 +339,7 @@ def relVendas():
 def relCompras():
     return render_template('relCompras.html')
 
-if __name__=='app':
+if __name__=='buf':
     print('app')
     db.create_all()
-    app.run
+    
