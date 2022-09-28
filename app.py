@@ -341,4 +341,4 @@ def relCompras():
 if __name__=='app':
     print('app')
     db.create_all()
-    #app.run()
+    app.run
